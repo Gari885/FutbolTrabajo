@@ -1,24 +1,11 @@
 <?php
 require_once 'GenericDAO.php';
 
-class UserDAO extends GenericDAO {
+class equiposDAO extends GenericDAO {
 
   // Nombre de la tabla
-  const USER_TABLE = 'usuarios';
+  private const EQUIPOS_TABLE = 'equipos';
 
-  public function selectAll() {
-    $query = "SELECT * FROM " . self::USER_TABLE;
-    $result = mysqli_query($this->conn, $query);
-    $users = array();
-    while ($userBD = mysqli_fetch_array($result)) {
-      $users[] = array(
-        'id' => $userBD["id"],
-        'nombre' => $userBD["nombre"],
-        'password' => $userBD["password"]
-      );
-    }
-    return $users;
-  }
 
   public function selectAllTeams() {
     $query = "SELECT * FROM " . self::EQUIPOS_TABLE;
@@ -34,17 +21,18 @@ class UserDAO extends GenericDAO {
     return $users;
   }
 
-  public function insert($nombre, $password) {
-    $query = "INSERT INTO " . self::USER_TABLE . " (nombre, password) VALUES (?, ?)";
+  public function insertTeam($nombre, $estadio) {
+    $query = "INSERT INTO " . self::EQUIPOS_TABLE . " (nombre, estadio) VALUES (?, ?)";
     $stmt = mysqli_prepare($this->conn, $query);
-    mysqli_stmt_bind_param($stmt, 'ss', $nombre, $password);
+    mysqli_stmt_bind_param($stmt, 'ss', $nombre, $estadio);
     return mysqli_stmt_execute($stmt);
   }
 
-  public function checkExists($nombre, $password) {
-    $query = "SELECT * FROM " . self::USER_TABLE . " WHERE nombre=? AND password=?";
+
+  public function checkExists($nombre, $estadio) {
+    $query = "SELECT * FROM " . self::EQUIPOS_TABLE . " WHERE nombre=? AND estadio=?";
     $stmt = mysqli_prepare($this->conn, $query);
-    mysqli_stmt_bind_param($stmt, 'ss', $nombre, $password);
+    mysqli_stmt_bind_param($stmt, 'ss', $nombre, $estadio);
     mysqli_stmt_execute($stmt);
 
     $result = mysqli_stmt_get_result($stmt);
