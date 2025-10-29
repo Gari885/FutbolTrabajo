@@ -1,24 +1,48 @@
 <?php
 require_once 'GenericDAO.php';
 
-class equiposDAO extends GenericDAO {
+class partidosDAO extends GenericDAO {
 
   // Nombre de la tabla
-  private const EQUIPOS_TABLE = 'equipos';
+  private const PARTIDOS_TABLE = 'partidos';
 
-  public function selectAllTeams() {
-    $query = "SELECT * FROM " . self::EQUIPOS_TABLE;
+
+public function getAllJornadas() {
+    $query = "SELECT DISTINCT jornada FROM " . self::PARTIDOS_TABLE . " ORDER BY jornada ASC";
     $result = mysqli_query($this->conn, $query);
-    $teams = array();
-    while ($equiposDAO = mysqli_fetch_array($result)) {
-      $users[] = array(
-        'id' => $equiposDAO["id_equipo"],
-        'nombre' => $equiposDAO["nombre"],
-        'estadio' => $equiposDAO["estadio"]
-      );
+
+    $jornadas = array();
+
+    while ($row = mysqli_fetch_assoc($result)) {
+        $jornadas[] = $row['jornada']; // agregamos solo el valor de la jornada
     }
-    return $users;
-  }
+    return $jornadas;
+}
+
+
+public function getPartidosByJornada($jornada) {
+    $query = "SELECT p.id_partido, e1.nombre AS local, e2.nombre AS visitante, p.resultado, p.estadio
+              FROM " . self::PARTIDOS_TABLE . " p
+              INNER JOIN equipos e1 ON p.id_local = e1.id_equipo
+              INNER JOIN equipos e2 ON p.id_visitante = e2.id_equipo
+              WHERE p.jornada = ?
+              ORDER BY p.id_partido ASC";
+
+    $stmt = mysqli_prepare($this->conn, $query);
+    mysqli_stmt_bind_param($stmt, "i", $jornada);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    $partidos = array();
+    while ($row = mysqli_fetch_assoc($result)) {
+        $partidos[] = $row; // agregamos todo el registro
+    }
+
+    mysqli_stmt_close($stmt);
+    return $partidos;
+}
+
+
 
   public function insertTeam($nombre, $estadio) {
     $query = "INSERT INTO " . self::EQUIPOS_TABLE . " (nombre, estadio) VALUES (?, ?)";
@@ -66,4 +90,3 @@ class equiposDAO extends GenericDAO {
   }
 }
 ?>
-
