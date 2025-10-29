@@ -20,6 +20,20 @@ class UserDAO extends GenericDAO {
     return $users;
   }
 
+  public function selectAllTeams() {
+    $query = "SELECT * FROM " . self::EQUIPOS_TABLE;
+    $result = mysqli_query($this->conn, $query);
+    $teams = array();
+    while ($userBD = mysqli_fetch_array($result)) {
+      $users[] = array(
+        'id' => $userBD["id_equipo"],
+        'nombre' => $userBD["nombre"],
+        'estadio' => $userBD["estadio"]
+      );
+    }
+    return $users;
+  }
+
   public function insert($nombre, $password) {
     $query = "INSERT INTO " . self::USER_TABLE . " (nombre, password) VALUES (?, ?)";
     $stmt = mysqli_prepare($this->conn, $query);

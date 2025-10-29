@@ -12,7 +12,7 @@
 
   // Obtenemos el directorio del proyecto para establecer rutas relativas.
   $dir = __DIR__;
-  $urlBase = "/Artean/ArteanV1";
+  $urlBase = "/FUTBOLTRABAJO/Futboleros";
   require_once $dir . '/../utils/SessionHelper.php';
 
 
@@ -58,7 +58,7 @@ if ($loggedin && isset($_SESSION['user'])) {
                 aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="<?php echo $urlBase; ?>/index.php">Artean</a>
+        <a class="navbar-brand" href="<?php echo $urlBase; ?>/index.php">FutbolStats</a>
 
         <div class="collapse navbar-collapse" id="navbarToggler">
             <ul class="navbar-nav mr-auto mt-2 mt-md-0">
@@ -80,18 +80,15 @@ else {
                 aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="<?php echo $urlBase; ?>/index.php">Artean</a>
+        <a class="navbar-brand" href="<?php echo $urlBase; ?>/index.php">FutbolStats</a>
 
         <div class="collapse navbar-collapse" id="navbarToggler">
             <ul class="navbar-nav mr-auto mt-2 mt-md-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo $urlBase; ?>/app/signup.php">Registrarse</a>
+                    <a class="nav-link" href="<?php echo $urlBase; ?>/app/equipos.php">Equipos</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo $urlBase; ?>/app/login.php">Entrar</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="<?php echo $urlBase; ?>/app/logout.php">Salir</a>
+                    <a class="nav-link" href="<?php echo $urlBase; ?>/app/partidos.php">Partidos</a>
                 </li>
             </ul>
         </div>
