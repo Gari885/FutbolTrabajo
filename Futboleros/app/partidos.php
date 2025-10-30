@@ -2,23 +2,15 @@
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-/**
- * @title: Proyecto integrador Ev01 - Registro en el sistema.
- * @description:  Script PHP para almacenar un nuevo usuario en la base de datos
- *
- * @version    0.2
- *
- * @author     Ander Frago & Miguel Goyena <miguel_goyena@cuatrovientos.org>
- */
 
-//TODO completa los requiere que necesites
+$basePath = $_SERVER['DOCUMENT_ROOT'] . '/FUTBOLTRABAJO/Futboleros';
 
+require_once $basePath . '/templates/header.php';
+require_once $basePath . '/persistence/DAO/equiposDAO.php';
+require_once $basePath . '/persistence/DAO/partidosDAO.php';  // Corregí "persistance" a "persistence"
+require_once $basePath . '/persistence/conf/PersistentManager.php';
+require_once $basePath . '/utils/SessionHelper.php';
 
-require_once '../templates/header.php';
-require_once '../persistence/DAO/partidosDAO.php';
-require_once '../persistence/DAO/equiposDAO.php';
-require_once '../persistence/conf/PersistentManager.php';
-require_once '../utils/SessionHelper.php';
 
 $gestionPartidos = new partidosDAO();
 $gestionEquipos = new equiposDAO();
@@ -62,9 +54,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($valid) {
         $insertOk = $gestionPartidos->insertPartido($jornada, $equipo1, $equipo2, $resultado, $estadio);
         if ($insertOk) {
-            echo "<div class='alert alert-success'>Partido añadido correctamente.</div>";
+            $alerta = "Partido añadido correctamente.";
         } else {
-            echo "<div class='alert alert-danger'>Error al insertar el partido en la base de datos.</div>";
+            $mensaje = "Error al insertar el partido en la base de datos.";
         }
     }
 }
@@ -89,10 +81,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <!-- Contenido de cada jornada -->
     <div class="list-group">
-        <?php 
+    <?php 
     $partidos = $gestionPartidos->getPartidosByJornada($numjornada);
     foreach ($partidos as $p): 
-  ?>
+    ?>
         <div class="list-group-item">
             <div class="d-flex justify-content-between align-items-center">
                 <div>
@@ -116,6 +108,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h2 class="mb-4 text-center">Añadir Partido</h2>
         <?php if (isset($mensaje)): ?>
           <div class="alert alert-info mt-3"><?= htmlspecialchars($mensaje) ?></div>
+        <?php endif; ?>
+        <?php if (isset($mensaje)): ?>
+            <div class='alert alert-success'><?= htmlspecialchars($mensaje) ?></div>
         <?php endif; ?>
         <form method="POST" class="p-4 border rounded shadow-sm bg-light">
             <div class="row mb-3">

@@ -1,7 +1,7 @@
 <?php
   // Obtenemos el directorio del proyecto para establecer rutas relativas.
   $dir = __DIR__;
-  $urlBase = "/FUTBOLENTREGA/Futboleros";
+  $urlBase = "/FUTBOLTRABAJO/Futboleros";
   require_once $dir . '/../utils/SessionHelper.php';
 
   ///

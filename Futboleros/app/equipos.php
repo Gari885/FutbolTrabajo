@@ -1,15 +1,15 @@
 <?php
-/**
- * @title: Proyecto integrador Ev01 - Acceso al sistema.
- * @description:  Script PHP para acceder al sistema
- * @version: 0.1
- * @author: ander_frago@cuatrovientos.org, miguel_goyena@cuatrovientos.org
- */
 
-require_once '../templates/header.php';
-require_once '../persistence/DAO/equiposDAO.php';
-require_once '../persistence/conf/PersistentManager.php';
-require_once '../utils/SessionHelper.php';
+
+// Ruta física del servidor (para require_once)
+$basePath = $_SERVER['DOCUMENT_ROOT'] . '/FUTBOLTRABAJO/Futboleros';
+
+require_once $basePath . '/templates/header.php';
+require_once $basePath . '/persistence/DAO/equiposDAO.php';
+require_once $basePath . '/persistence/DAO/partidosDAO.php';  // Corregí "persistance" a "persistence"
+require_once $basePath . '/persistence/conf/PersistentManager.php';
+require_once $basePath . '/utils/SessionHelper.php';
+
 
 $gestionEquipos = new equiposDAO();
 $equipos = $gestionEquipos->selectAllTeams();
@@ -21,6 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $estadio = trim($_POST['estadio']);
     if ($nombre !== '' and $estadio !== '') {
         if (!$gestionEquipos->checkExists($nombre,$estadio)) {
+          $alerta = "Partido añadido correctamente.";
           $gestionEquipos->insertTeam($nombre, $estadio);
         } else{
           $mensaje = "El equipo ya existe en la base de datos.";
@@ -60,6 +61,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       <h2 class="mb-4 text-center">Añadir Equipo</h2>
       <?php if (isset($mensaje)): ?>
       <div class="alert alert-info mt-3"><?= htmlspecialchars($mensaje) ?></div>
+      <?php endif; ?>
+      <?php if (isset($alerta)): ?>
+            <div class='alert alert-success'><?= htmlspecialchars($alerta) ?></div>
       <?php endif; ?>
         <form method="POST">
           <div class="mb-3">
