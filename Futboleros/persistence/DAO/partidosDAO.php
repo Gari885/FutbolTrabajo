@@ -19,7 +19,6 @@ public function getAllJornadas() {
     return $jornadas;
 }
 
-
 public function getPartidosByJornada($jornada) {
     $query = "SELECT p.id_partido, e1.nombre AS local, e2.nombre AS visitante, p.resultado, p.estadio
               FROM " . self::PARTIDOS_TABLE . " p
@@ -43,28 +42,53 @@ public function getPartidosByJornada($jornada) {
 }
 
 
+public function checkPartidoExists($jornada, $equipo1, $equipo2) {
+    $query = "SELECT id_partido 
+              FROM " . self::PARTIDOS_TABLE . " 
+              WHERE jornada = ? 
+              AND (
+                  (id_local = ? AND id_visitante = ?) 
+                  OR (id_local = ? AND id_visitante = ?)
+              )";
 
-  public function insertTeam($nombre, $estadio) {
-    $query = "INSERT INTO " . self::EQUIPOS_TABLE . " (nombre, estadio) VALUES (?, ?)";
     $stmt = mysqli_prepare($this->conn, $query);
-    mysqli_stmt_bind_param($stmt, 'ss', $nombre, $estadio);
-    return mysqli_stmt_execute($stmt);
-  }
-
-
-  public function checkExists($nombre, $estadio) {
-    $query = "SELECT * FROM " . self::EQUIPOS_TABLE . " WHERE nombre=? AND estadio=?";
-    $stmt = mysqli_prepare($this->conn, $query);
-    mysqli_stmt_bind_param($stmt, 'ss', $nombre, $estadio);
+    mysqli_stmt_bind_param($stmt, 'iiiii', $jornada, $equipo1, $equipo2, $equipo2, $equipo1);
     mysqli_stmt_execute($stmt);
 
     $result = mysqli_stmt_get_result($stmt);
-    if ($result && mysqli_num_rows($result) > 0) {
-      return true;
-    } else {
-      return false;
+    $exists = ($result && mysqli_num_rows($result) > 0);
+
+    mysqli_stmt_close($stmt);
+    return $exists;
+}
+
+public function insertPartido($jornada, $equipo1, $equipo2, $resultado, $estadio) {
+    $query = "INSERT INTO " . self::PARTIDOS_TABLE . " 
+              (id_local, id_visitante, jornada, resultado, estadio) 
+              VALUES (?, ?, ?, ?, ?)";
+    $stmt = mysqli_prepare($this->conn, $query);
+    mysqli_stmt_bind_param($stmt, 'iiiss', $equipo1, $equipo2, $jornada, $resultado, $estadio);
+    
+    $success = mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    
+    return $success;
+}
+
+
+public function getEstadioByEquipoId($id_equipo) {
+    $query = "SELECT estadio FROM equipos WHERE id_equipo = ?";
+    $stmt = mysqli_prepare($this->conn, $query);
+    mysqli_stmt_bind_param($stmt, 'i', $id_equipo);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    if ($row = mysqli_fetch_assoc($result)) {
+        return $row['estadio'];
     }
-  }
+    return null; // por si no encuentra
+}
+
 
   public function selectById($id) {
     $query = "SELECT id, nombre, password FROM " . self::USER_TABLE . " WHERE id=?";

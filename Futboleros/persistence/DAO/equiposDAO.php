@@ -9,7 +9,6 @@ class equiposDAO extends GenericDAO {
   public function selectAllTeams() {
     $query = "SELECT * FROM " . self::EQUIPOS_TABLE;
     $result = mysqli_query($this->conn, $query);
-    $teams = array();
     while ($equiposDAO = mysqli_fetch_array($result)) {
       $users[] = array(
         'id' => $equiposDAO["id_equipo"],
@@ -42,6 +41,17 @@ class equiposDAO extends GenericDAO {
     }
   }
 
+public function getEstadioByEquipoId($equipo1) {
+    $query = "SELECT estadio FROM " . self::EQUIPOS_TABLE . " WHERE id_equipo = ?";
+    $stmt = mysqli_prepare($this->conn, $query);
+    mysqli_stmt_bind_param($stmt, "i", $equipo1);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+    if ($row = mysqli_fetch_assoc($result)) {
+        return $row['estadio'];
+    }
+    return null;
+}
   public function selectById($id) {
     $query = "SELECT id, nombre, password FROM " . self::USER_TABLE . " WHERE id=?";
     $stmt = mysqli_prepare($this->conn, $query);
