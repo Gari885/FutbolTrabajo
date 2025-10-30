@@ -134,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php if (!empty($equipos) && is_array($equipos)): ?>
                         <?php foreach ($equipos as $eq): ?>
                         <option
-                            value="<?php echo isset($eq['id_equipo']) ? htmlspecialchars($eq['id_equipo']) : ''; ?>">
+                            value="<?php echo isset($eq['id']) ? htmlspecialchars($eq['id']) : ''; ?>">
                             <?php echo isset($eq['nombre']) ? htmlspecialchars($eq['nombre']) : 'Sin nombre'; ?>
                         </option>
                         <?php endforeach; ?>
@@ -152,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php if (!empty($equipos) && is_array($equipos)): ?>
                         <?php foreach ($equipos as $eq): ?>
                         <option
-                            value="<?php echo isset($eq['id_equipo']) ? htmlspecialchars($eq['id_equipo']) : ''; ?>">
+                            value="<?php echo isset($eq['id']) ? htmlspecialchars($eq['id']) : ''; ?>">
                             <?php echo isset($eq['nombre']) ? htmlspecialchars($eq['nombre']) : 'Sin nombre'; ?>
                         </option>
                         <?php endforeach; ?>

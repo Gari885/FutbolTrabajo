@@ -1,28 +1,12 @@
 <?php
-/**
- * @title: Proyecto integrador Ev01 - Cabecera y barrra de navegación.
- * @description:  Script PHP para la gestión de la sesión de usuario.
- *                Dependiendo si el usuario esta registrado o no aparecen unas
- *   opciones en la barra de navegación.
- *
- * @version    0.2
- *
- * @author     Ander Frago & Miguel Goyena <miguel_goyena@cuatrovientos.org>
- */
-
   // Obtenemos el directorio del proyecto para establecer rutas relativas.
   $dir = __DIR__;
-  $urlBase = "/FUTBOLTRABAJO/Futboleros";
+  $urlBase = "/FUTBOLENTREGA/Futboleros";
   require_once $dir . '/../utils/SessionHelper.php';
-
-
 
   ///
   /// Gestión de la sesión de usuario:
   ///
-
-  // String para almacenar el nombre de usuario, por defecto "Invitado"
-  $user = '(Invitado)';
 
   // TODO Almacena en la variable $loggedin el valor retornado de la función loggedin de SessionHelper
 $loggedin = SessionHelper::loggedIn();
@@ -39,11 +23,7 @@ if ($loggedin && isset($_SESSION['user'])) {
           content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
         <link rel="stylesheet" href="<?php echo $urlBase ?>/assets/css/bootstrap.min.css">
-
-
 </head>
-
-
 <body>
 
 <?php
