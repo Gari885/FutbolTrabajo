@@ -48,7 +48,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p class="card-text">
               <strong>Estadio:</strong> <?= htmlspecialchars($eq['estadio']) ?>
             </p>
-            <a href="partidosEquipo.php" class="btn btn-primary btn-sm">
+            <a href="partidosEquipo.php?id=<?= urlencode($eq['id']) ?>" 
+              class="btn btn-primary btn-sm">
               Ver partidos
             </a>
           </div>

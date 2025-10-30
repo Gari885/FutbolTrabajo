@@ -76,18 +76,24 @@ public function insertPartido($jornada, $equipo1, $equipo2, $resultado, $estadio
 }
 
 
-public function getEstadioByEquipoId($id_equipo) {
-    $query = "SELECT estadio FROM equipos WHERE id_equipo = ?";
+public function getPartidoById($id_equipo) {
+    $query = "SELECT p.*, e1.nombre AS local, e2.nombre AS visitante, p.estadio
+              FROM partidos p
+              INNER JOIN equipos e1 ON p.id_local = e1.id_equipo
+              INNER JOIN equipos e2 ON p.id_visitante = e2.id_equipo
+              WHERE p.id_partido = ?";
+
     $stmt = mysqli_prepare($this->conn, $query);
     mysqli_stmt_bind_param($stmt, 'i', $id_equipo);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 
     if ($row = mysqli_fetch_assoc($result)) {
-        return $row['estadio'];
+        return $row; // devuelve el partido completo
     }
-    return null; // por si no encuentra
+    return null;
 }
+
 
 
   public function selectById($id) {
