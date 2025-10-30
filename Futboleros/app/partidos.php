@@ -47,7 +47,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validación de equipos distintos
     if ($equipo1 === $equipo2) {
       if (!$equipo1 === "Selecciona equipo" && !$equipo === "Selecciona equipo") {
-        $mensaje = "No puedes elegir el mismo equipo dos veces.";
+          $mensaje = "No puedes elegir el mismo equipo dos veces.";
         $valid = false;
       }
     }
