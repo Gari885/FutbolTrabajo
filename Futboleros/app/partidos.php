@@ -61,7 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Si todo está bien, insertamos
     if ($valid) {
         $insertOk = $gestionPartidos->insertPartido($jornada, $equipo1, $equipo2, $resultado, $estadio);
-        
         if ($insertOk) {
             echo "<div class='alert alert-success'>Partido añadido correctamente.</div>";
         } else {
