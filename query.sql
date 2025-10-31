@@ -2,21 +2,21 @@
 -- SCRIPT DE CREACIÓN DE BASE DE DATOS - PROYECTO ARTEAN
 -- ==========================================================
 
--- 1️⃣ Crear la base de datos
+-- Crear la base de datos
 CREATE DATABASE IF NOT EXISTS futbolstats
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_general_ci;
 
 USE futbolstats;
 
--- 2️⃣ Tabla de equipos
+-- Tabla de equipos
 CREATE TABLE equipos (
     id_equipo INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL UNIQUE,
     estadio VARCHAR(100) NOT NULL
 );
 
--- 3️⃣ Tabla de partidos
+-- Tabla de partidos
 CREATE TABLE partidos (
     id_partido INT AUTO_INCREMENT PRIMARY KEY,
     id_local INT NOT NULL,
@@ -31,7 +31,7 @@ CREATE TABLE partidos (
     CONSTRAINT uq_partido UNIQUE (id_local, id_visitante, jornada)
 );
 
--- 4️⃣ Datos de ejemplo (opcional)
+-- Datos de ejemplo (opcional)
 INSERT INTO equipos (nombre, estadio) VALUES
 ('Athletic Club', 'San Mamés'),
 ('Real Sociedad', 'Reale Arena'),
