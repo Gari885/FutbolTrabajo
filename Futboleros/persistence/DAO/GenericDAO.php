@@ -1,4 +1,9 @@
 <?php
+
+$basePath = $_SERVER['DOCUMENT_ROOT'] . '/FUTBOLENTREGA/Futboleros';
+
+require_once $basePath . '/persistence/conf/PersistentManager.php';
+
 abstract class GenericDAO {
 
   //Conexión a BD
@@ -9,7 +14,6 @@ abstract class GenericDAO {
   }
 
   // métodos abstractos para CRUD de clases que hereden
-  abstract protected function selectById($id);
   abstract protected function delete($id);
 
 }

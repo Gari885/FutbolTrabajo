@@ -3,13 +3,11 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$basePath = $_SERVER['DOCUMENT_ROOT'] . '/FUTBOLTRABAJO/Futboleros';
+$basePath = $_SERVER['DOCUMENT_ROOT'] . '/FUTBOLENTREGA/Futboleros';
 
 require_once $basePath . '/templates/header.php';
 require_once $basePath . '/persistence/DAO/equiposDAO.php';
 require_once $basePath . '/persistence/DAO/partidosDAO.php';  // Corregí "persistance" a "persistence"
-require_once $basePath . '/persistence/conf/PersistentManager.php';
-require_once $basePath . '/utils/SessionHelper.php';
 
 
 $gestionPartidos = new partidosDAO();

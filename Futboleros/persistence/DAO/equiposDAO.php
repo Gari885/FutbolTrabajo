@@ -63,14 +63,6 @@ public function getEquipoById($id_equipo) {
     return mysqli_fetch_assoc($result);
 }
 
-  public function selectById($id) {
-    $query = "SELECT id, nombre, password FROM " . self::USER_TABLE . " WHERE id=?";
-    $stmt = mysqli_prepare($this->conn, $query);
-    mysqli_stmt_bind_param($stmt, 'i', $id);
-    mysqli_stmt_execute($stmt);
-    $result = mysqli_stmt_get_result($stmt);
-    return mysqli_fetch_assoc($result);
-  }
 
   public function update($id, $nombre, $password) {
     $query = "UPDATE " . self::USER_TABLE . " SET nombre=?, password=? WHERE id=?";

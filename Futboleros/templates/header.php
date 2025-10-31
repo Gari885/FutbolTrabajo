@@ -1,7 +1,7 @@
 <?php
   // Obtenemos el directorio del proyecto para establecer rutas relativas.
   $dir = __DIR__;
-  $urlBase = "/FUTBOLTRABAJO/Futboleros";
+  $urlBase = "/FUTBOLENTREGA/Futboleros";
   require_once $dir . '/../utils/SessionHelper.php';
 
   ///
@@ -18,7 +18,7 @@ if ($loggedin && isset($_SESSION['user'])) {
 ?>
 <head>
     <meta charset="utf-8">
-    <title><?php echo "$user" ?></title>
+    <title>FutbolStats</title>
     <meta name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">

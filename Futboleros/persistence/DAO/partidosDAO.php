@@ -77,21 +77,27 @@ public function insertPartido($jornada, $equipo1, $equipo2, $resultado, $estadio
 
 
 public function getPartidoById($id_equipo) {
+    // Busca partidos donde el equipo juega como LOCAL O como VISITANTE
     $query = "SELECT p.*, e1.nombre AS local, e2.nombre AS visitante, p.estadio
               FROM partidos p
               INNER JOIN equipos e1 ON p.id_local = e1.id_equipo
               INNER JOIN equipos e2 ON p.id_visitante = e2.id_equipo
-              WHERE p.id_partido = ?";
+              WHERE p.id_local = ? OR p.id_visitante = ?
+              ORDER BY p.jornada ASC";
 
     $stmt = mysqli_prepare($this->conn, $query);
-    mysqli_stmt_bind_param($stmt, 'i', $id_equipo);
+    // Pasamos el id_equipo DOS veces (para local Y visitante)
+    mysqli_stmt_bind_param($stmt, 'ii', $id_equipo, $id_equipo);
     mysqli_stmt_execute($stmt);
     $result = mysqli_stmt_get_result($stmt);
 
-    if ($row = mysqli_fetch_assoc($result)) {
-        return $row; // devuelve el partido completo
+    // Devolvemos TODOS los partidos en un array
+    $partidos = array();
+    while ($row = mysqli_fetch_assoc($result)) {
+        $partidos[] = $row;
     }
-    return null;
+    
+    return $partidos;
 }
 
 
