@@ -7,7 +7,7 @@ $basePath = $_SERVER['DOCUMENT_ROOT'] . '/FUTBOLENTREGA/Futboleros';
 
 require_once $basePath . '/templates/header.php';
 require_once $basePath . '/persistence/DAO/equiposDAO.php';
-require_once $basePath . '/persistence/DAO/partidosDAO.php';  // Corregí "persistance" a "persistence"
+require_once $basePath . '/persistence/DAO/partidosDAO.php'; 
 
 
 $gestionPartidos = new partidosDAO();
@@ -42,6 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       }
     }
 
+    if ($resultado === '') {
+        $mensaje = "Debes ingresar un resultado.";
+        $valid = false;
+    }
+
     // Comprobar si el partido ya existe
     if ($gestionPartidos->checkPartidoExists($jornada, $equipo1, $equipo2)) {
         $mensaje = "Ya existe un partido entre estos equipos en la jornada $jornada.";
@@ -51,9 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Si todo está bien, insertamos
     if ($valid) {
         $insertOk = $gestionPartidos->insertPartido($jornada, $equipo1, $equipo2, $resultado, $estadio);
-        if ($insertOk) {
-            $alerta = "Partido añadido correctamente.";
-        } else {
+        if (!$insertok) {
             $mensaje = "Error al insertar el partido en la base de datos.";
         }
     }
@@ -106,9 +109,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <h2 class="mb-4 text-center">Añadir Partido</h2>
         <?php if (isset($mensaje)): ?>
           <div class="alert alert-info mt-3"><?= htmlspecialchars($mensaje) ?></div>
-        <?php endif; ?>
-        <?php if (isset($mensaje)): ?>
-            <div class='alert alert-success'><?= htmlspecialchars($mensaje) ?></div>
         <?php endif; ?>
         <form method="POST" class="p-4 border rounded shadow-sm bg-light">
             <div class="row mb-3">

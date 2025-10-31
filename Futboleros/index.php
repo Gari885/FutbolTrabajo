@@ -1,6 +1,5 @@
 <?php
 session_start();
-$basePath = $_SERVER['DOCUMENT_ROOT'] . '/FUTBOLENTREGA/Futboleros';
 
 // Verificar si hay un equipo guardado en sesión
 if (isset($_SESSION['ultimo_equipo_id'])) {

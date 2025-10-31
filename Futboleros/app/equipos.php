@@ -28,7 +28,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       $mensaje = "Debes completar ambos campos.";
     }
 
-
     // Volvemos a cargar los equipos para que aparezca el nuevo
     $equipos = $gestionEquipos->selectAllTeams();
 }
